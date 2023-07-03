@@ -1,0 +1,34 @@
+services:
+
+  pgsql:
+    image: "postgres:bullseye"
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: socnet
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: prod
+    networks:
+      - socnet_bridge
+    
+  redis:
+    image: "redis:7.2-rc"
+    ports: 
+      - "6379:6379"
+    networks:
+      - socnet_bridge
+
+  socnet:
+    build: .
+    ports:
+      - "8000:80"
+    networks:
+      - socnet_bridge
+    
+    environment:
+      DB_URL: pgsql
+
+networks:
+  socnet_bridge:
+
+  
