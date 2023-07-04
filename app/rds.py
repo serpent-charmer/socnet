@@ -5,7 +5,7 @@ from purse.collections import RedisHash
 
 
 REDIS_URL = os.getenv("REDIS_URL", "127.0.0.1")
-redis_instanse = Redis()
+redis_instanse = Redis(host=REDIS_URL)
 tokens = RedisHash(redis_instanse, "jwts", str)
 
 async def check_token(token):

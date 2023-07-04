@@ -27,6 +27,7 @@ services:
     
     environment:
       DB_URL: pgsql
+      REDIS_URL: redis
 
 networks:
   socnet_bridge:
