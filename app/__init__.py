@@ -1,12 +1,12 @@
-import asyncio
+from venv import logger
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
+from async_fastapi_jwt_auth.exceptions import AuthJWTException
 
 from app.rds import REDIS_URL, add_token, check_token
 from app.auth import router
 from app.post import router as posts_router
 
-from async_fastapi_jwt_auth.exceptions import AuthJWTException
 
 
 app = FastAPI()
@@ -22,6 +22,7 @@ def exception_handler(request: Request, exc: Exception):
                 content={"detail": exc.message}
             )
         case _:
+            logger.exception(exc)
             return JSONResponse(
                 status_code=400,
                 content={"message": "Unhandled exception, check logs"}
